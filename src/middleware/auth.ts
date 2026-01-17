@@ -1,5 +1,5 @@
 import { FastifyPluginAsync, FastifyRequest, FastifyReply } from 'fastify';
-import { supabase } from '../../config/database.js';
+import { supabase } from '../config/database.js';
 
 interface User {
     id: string;

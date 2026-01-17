@@ -1,0 +1,14 @@
+# Render Blueprint
+services:
+  - type: web
+    name: newsportal-backend
+    runtime: node
+    region: singapore
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 8080

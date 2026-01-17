@@ -1,5 +1,5 @@
 import neo4j, { Driver } from 'neo4j-driver';
-import { env } from './env.js';
+import { env } from '../config/env.js';
 
 let driver: Driver | null = null;
 
