@@ -69,13 +69,10 @@ const categoryMap: Record<string, string> = {
 export function mapNewsDataToArticle(article: NewsDataArticle) {
     return {
         title: article.title,
-        excerpt: article.description?.slice(0, 200) || null,
+        excerpt: article.description?.slice(0, 500) || null,
         url: article.link,
         image_url: article.image_url,
         published_at: new Date(article.pubDate).toISOString(),
         category: categoryMap[article.category?.[0]] || article.category?.[0] || 'World',
-        region: article.country?.[0] || null,
-        language: article.language,
-        source_name: article.source_name || article.source_id,
     };
 }

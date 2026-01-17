@@ -55,11 +55,9 @@ export async function fetchFromGNews(
 export function mapGNewsToArticle(article: GNewsArticle) {
     return {
         title: article.title,
-        excerpt: article.description?.slice(0, 200) || null,
+        excerpt: article.description?.slice(0, 500) || null,
         url: article.url,
         image_url: article.image,
         published_at: new Date(article.publishedAt).toISOString(),
-        source_name: article.source.name,
-        language: 'en',
     };
 }
