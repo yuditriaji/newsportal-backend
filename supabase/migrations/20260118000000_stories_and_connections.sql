@@ -114,10 +114,11 @@ CREATE INDEX IF NOT EXISTS idx_story_impacts_story ON story_impacts(story_id);
 CREATE INDEX IF NOT EXISTS idx_story_impacts_sector ON story_impacts(sector_id);
 
 -- ============================================
--- Add embedding column to articles for clustering
+-- Note: Embedding column for article clustering requires pgvector extension
+-- Run this separately if pgvector is enabled:
+-- ALTER TABLE articles ADD COLUMN IF NOT EXISTS embedding vector(1536);
+-- CREATE INDEX IF NOT EXISTS idx_articles_embedding ON articles USING ivfflat (embedding vector_cosine_ops);
 -- ============================================
-ALTER TABLE articles ADD COLUMN IF NOT EXISTS embedding vector(1536);
-CREATE INDEX IF NOT EXISTS idx_articles_embedding ON articles USING ivfflat (embedding vector_cosine_ops);
 
 -- ============================================
 -- ROW LEVEL SECURITY
