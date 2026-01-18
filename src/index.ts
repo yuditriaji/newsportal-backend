@@ -13,6 +13,7 @@ import { investigationsRoutes } from './routes/v1/investigations.js';
 import { authRoutes } from './routes/v1/auth.js';
 import { ingestRoutes } from './routes/ingest.js';
 import { aiRoutes } from './routes/ai.js';
+import storiesRoutes from './routes/stories.js';
 
 // Validate environment variables
 validateEnv();
@@ -60,6 +61,9 @@ async function registerRoutes() {
     await fastify.register(articlesRoutes, { prefix: '/api/v1/articles' });
     await fastify.register(entitiesRoutes, { prefix: '/api/v1/entities' });
     await fastify.register(investigationsRoutes, { prefix: '/api/v1/investigations' });
+
+    // Stories API (synthesized news)
+    await fastify.register(storiesRoutes, { prefix: '/api' });
 
     // Internal ingestion routes
     await fastify.register(ingestRoutes, { prefix: '/api/ingest' });
