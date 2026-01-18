@@ -156,7 +156,7 @@ async function getUnassignedArticles(hoursBack: number = 48): Promise<Article[]>
         .select('id, title, excerpt, url, published_at, image_url, news_sources(name)')
         .gte('published_at', since)
         .order('published_at', { ascending: false })
-        .limit(100);
+        .limit(500);
 
     if (error) {
         console.error('Error fetching articles:', error);
@@ -329,8 +329,8 @@ export async function runClusteringJob(): Promise<{
 }> {
     console.log('Starting clustering job...');
 
-    // Get unassigned articles from last 48 hours
-    const articles = await getUnassignedArticles(48);
+    // Get unassigned articles from last 30 days (720 hours)
+    const articles = await getUnassignedArticles(720);
     console.log(`Found ${articles.length} unassigned articles`);
 
     if (articles.length < 2) {
