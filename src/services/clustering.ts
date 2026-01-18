@@ -191,8 +191,8 @@ async function getUnassignedArticles(hoursBack: number = 48): Promise<Article[]>
 async function createStoryFromCluster(cluster: Cluster): Promise<string | null> {
     const { articles } = cluster;
 
-    // Need at least 2 articles to form a story
-    if (articles.length < 2) return null;
+    // Allow single-article stories for standalone breaking news
+    if (articles.length < 1) return null;
 
     try {
         // Generate synthesis using AI
@@ -337,13 +337,13 @@ export async function runClusteringJob(): Promise<{
         return { articlesProcessed: 0, storiesCreated: 0, clusters: 0 };
     }
 
-    // Cluster by similarity
-    const clusters = clusterArticles(articles, 0.35);
+    // Cluster by similarity (lower threshold to group more articles)
+    const clusters = clusterArticles(articles, 0.20);
     console.log(`Formed ${clusters.length} clusters`);
 
-    // Filter to clusters with 2+ articles
-    const validClusters = clusters.filter(c => c.articles.length >= 2);
-    console.log(`${validClusters.length} clusters have 2+ articles`);
+    // Allow single-article stories too for breaking news
+    const validClusters = clusters.filter(c => c.articles.length >= 1);
+    console.log(`${validClusters.length} clusters have 1+ articles`);
 
     // Create stories from valid clusters
     let storiesCreated = 0;
