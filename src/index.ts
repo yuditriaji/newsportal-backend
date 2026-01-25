@@ -15,6 +15,9 @@ import { ingestRoutes } from './routes/ingest.js';
 import { aiRoutes } from './routes/ai.js';
 import storiesRoutes from './routes/stories.js';
 
+// Import scheduler
+import { initializeScheduler } from './services/scheduler.js';
+
 // Validate environment variables
 validateEnv();
 
@@ -91,6 +94,12 @@ async function start() {
 
         await fastify.listen({ port: env.PORT, host: '0.0.0.0' });
         fastify.log.info(`Server running on http://localhost:${env.PORT}`);
+
+        // Initialize scheduled jobs (only in production)
+        if (env.isProduction) {
+            initializeScheduler();
+            fastify.log.info('Scheduler initialized');
+        }
     } catch (err) {
         fastify.log.error(err);
         process.exit(1);
